@@ -1,0 +1,184 @@
+/* === Loading Screen === */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000; /* high contrast for accessibility */
+  color: #fff;
+  z-index: 1000;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer; /* indicate clickable */
+}
+
+.loading-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35); /* slightly darker for better text contrast */
+}
+
+.loading-overlay {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.6); /* higher contrast for readability */
+  border-radius: 12px;
+  max-width: 90%;
+}
+
+.loading-overlay h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s infinite;
+}
+
+.loading-overlay p {
+  opacity: 0.9;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Sound hint is prominent, accessible color, and pulsing */
+.loading-overlay p.sound-hint {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #ffd700; /* gold for attention */
+  text-shadow: 1px 1px 2px #000;
+  animation: pulse 2s infinite;
+}
+
+/* Pulsing animation */
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* === Base App Styling === */
+.app-container {
+  text-align: center;
+  background: #f4f6fc;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === Header === */
+header {
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #111; /* high contrast for readability */
+  margin: 0;
+}
+
+/* === Game Board === */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+  justify-items: center;
+  padding: 0 1rem;
+}
+
+/* === Cards === */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 120px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:focus {
+  outline: 3px solid #ffd700; /* accessible focus indicator */
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #222; /* higher contrast */
+  margin: 0.4rem 0;
+  line-height: 1.2;
+}
+
+/* === Footer === */
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #444; /* slightly darker for readability */
+  text-align: center;
+}
+
+/* === Error Message === */
+.error {
+  color: #c0392b; /* accessible red */
+  font-weight: 600;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .loading-overlay h1 {
+    font-size: 1.6rem;
+  }
+
+  .loading-overlay p.sound-hint {
+    font-size: 1rem;
+  }
+
+  .card {
+    width: 100px;
+    height: 140px;
+  }
+
+  .card img {
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-overlay h1 {
+    font-size: 1.4rem;
+  }
+
+  .loading-overlay p.sound-hint {
+    font-size: 0.95rem;
+  }
+
+  .card {
+    width: 90px;
+    height: 130px;
+  }
+
+  .card img {
+    height: 90px;
+  }
+}
