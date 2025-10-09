@@ -1,29 +1,26 @@
 // src/components/GameBoard.jsx
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "./Card";
-import { fetchAnimeCharacters } from "../api";
-import '../styles/GameBoard.css';
+import "../styles/GameBoard.css";
 
-export default function GameBoard({ score, setScore, bestScore, setBestScore }) {
-  const [cards, setCards] = useState([]);
+export default function GameBoard({ cards = [], mode = "easy" }) {
   const [clicked, setClicked] = useState([]);
+  const [displayedCards, setDisplayedCards] = useState([]);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
 
   // Shuffle helper
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
-  // Fetch characters once
+  // Update displayed cards whenever cards or mode changes
   useEffect(() => {
-    async function loadCards() {
-      try {
-        const data = await fetchAnimeCharacters();
-        setCards(shuffle(data));
-      } catch (err) {
-        console.error("Failed to fetch characters:", err);
-      }
-    }
-    loadCards();
-  }, []);
+    const limit = mode === "easy" ? 12 : 16;
+    setDisplayedCards(shuffle(cards).slice(0, limit));
+    setClicked([]); // reset clicked when mode changes
+    setScore(0);
+  }, [cards, mode]);
 
+  // Handle card click
   const handleCardClick = (id) => {
     if (clicked.includes(id)) {
       setScore(0);
@@ -31,17 +28,31 @@ export default function GameBoard({ score, setScore, bestScore, setBestScore }) 
     } else {
       const newScore = score + 1;
       setScore(newScore);
-      setBestScore(Math.max(bestScore, newScore));
+      setBestScore((prev) => Math.max(prev, newScore));
       setClicked([...clicked, id]);
     }
-    setCards(shuffle(cards)); // reshuffle after every click
+    // Reshuffle cards after every click
+    setDisplayedCards(shuffle(displayedCards));
   };
 
   return (
-    <div className="game-board">
-      {cards.map((card) => (
-        <Card key={card.id} card={card} onClick={handleCardClick} />
-      ))}
+    <div className="game-board-container">
+      {/* Scoreboard */}
+      <div className="scoreboard">
+        <p>Score: {score}</p>
+        <p>Best Score: {bestScore}</p>
+      </div>
+
+      {/* Game Board */}
+      <div className={`game-board ${mode}`}>
+        {displayedCards.map((card) => (
+          <Card
+            key={card.id}
+            card={card}
+            onClick={handleCardClick}
+          />
+        ))}
+      </div>
     </div>
   );
 }

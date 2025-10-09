@@ -80,7 +80,7 @@ html, body {
 
 /* === Header === */
 header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 header h1 {
@@ -89,40 +89,40 @@ header h1 {
   margin: 0;
 }
 
-/* === Mode Selection Buttons === */
-.mode-selection {
+/* === Mode Buttons === */
+.mode-buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
   flex-wrap: wrap;
 }
 
-.mode-selection button {
+.mode-buttons button {
   padding: 0.6rem 1.2rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   background-color: #eee;
   font-weight: 600;
   font-size: 1rem;
-  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
   outline: none;
 }
 
-.mode-selection button:hover,
-.mode-selection button:focus {
+.mode-buttons button:hover,
+.mode-buttons button:focus {
   background-color: #ddd;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-.mode-selection button:focus-visible {
+.mode-buttons button:focus-visible {
   outline: 3px solid #ffd700;
   outline-offset: 2px;
 }
 
-.mode-selection button.active {
+.mode-buttons button.active {
   background-color: #ffd700;
   color: #000;
 }
@@ -130,15 +130,25 @@ header h1 {
 /* === Game Board === */
 .game-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1rem;
-  justify-content: center; /* center grid horizontally */
-  justify-items: center;   /* center cards inside grid */
+  justify-content: center;
+  justify-items: center;
   align-items: center;
   width: 100%;
-  max-width: 900px;
+  max-width: 960px;
   padding: 0 1rem;
   margin: 0 auto;
+}
+
+/* Grid adjustments based on mode */
+.game-board.easy {
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-auto-rows: 160px; /* height of each card */
+}
+
+.game-board.hard {
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-auto-rows: 160px; /* height of each card */
 }
 
 /* === Cards === */
@@ -162,8 +172,8 @@ header h1 {
 }
 
 .card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
 .card img {
@@ -196,18 +206,19 @@ footer {
 }
 
 /* === Responsive Adjustments === */
+@media (max-width: 1024px) {
+  .card { width: 110px; height: 150px; }
+  .game-board.easy,
+  .game-board.hard { gap: 0.8rem; }
+}
+
 @media (max-width: 768px) {
-  .loading-overlay h1 { font-size: 1.6rem; }
-  .loading-overlay p.sound-hint { font-size: 1rem; }
   .card { width: 100px; height: 140px; }
-  .card img { height: 100px; }
-  .mode-selection button { font-size: 0.95rem; padding: 0.5rem 1rem; }
+  .mode-buttons button { font-size: 0.95rem; padding: 0.5rem 1rem; }
 }
 
 @media (max-width: 480px) {
-  .loading-overlay h1 { font-size: 1.4rem; }
-  .loading-overlay p.sound-hint { font-size: 0.95rem; }
   .card { width: 90px; height: 130px; }
   .card img { height: 90px; }
-  .mode-selection button { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
+  .mode-buttons button { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
 }

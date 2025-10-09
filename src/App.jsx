@@ -1,32 +1,36 @@
+// src/App.jsx
 import { useEffect, useState, useRef } from "react";
 import "./styles/App.css";
 import { fetchAnimeCharacters } from "./api";
 import loadingVideo from "./assets/pekorap.mp4";
+import GameBoard from "./components/GameBoard";
+
+// ✅ Import local images
+import shadowImg from "./assets/shadow.jpg";
+import rimuruImg from "./assets/rimuru.jpg";
+import rudeusImg from "./assets/rudeus.jpg";
+import luffyImg from "./assets/luffy.jpg";
 
 const extraCards = [
-  { id: "shadow", name: "Shadow", image: "/src/assets/shadow.jpg" },
-  { id: "rimuru", name: "Rimuru", image: "/src/assets/rimuru.jpg" },
-  { id: "rudes", name: "Rudes", image: "/src/assets/rudes.jpg" },
-  { id: "luffy", name: "Luffy", image: "/src/assets/luffy.jpg" },
+  { id: "shadow", name: "Shadow", image: shadowImg },
+  { id: "rimuru", name: "Rimuru", image: rimuruImg },
+  { id: "rudeus", name: "Rudeus Greyrat", image: rudeusImg },
+  { id: "luffy", name: "Luffy", image: luffyImg },
 ];
 
 function App() {
-  const [characters, setCharacters] = useState([]);
   const [allCharacters, setAllCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [score, setScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
-  const [clicked, setClicked] = useState([]);
+  const [mode, setMode] = useState("easy");
   const [soundEnabled, setSoundEnabled] = useState(false);
-  const [mode, setMode] = useState("easy"); // default mode
-
   const videoRef = useRef(null);
 
-  // Limit video loop to 20 seconds
+  // === Limit video loop to 20 seconds ===
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
     const handleTimeUpdate = () => {
       if (video.currentTime >= 20) {
         video.currentTime = 0;
@@ -44,16 +48,14 @@ function App() {
     video.play().then(() => setSoundEnabled(true));
   };
 
-  // Fetch characters
+  // === Fetch characters + extras ===
   useEffect(() => {
     async function loadCharacters() {
       try {
         const data = await fetchAnimeCharacters();
-        const combined = [...data, ...extraCards]; // extra cards can appear in easy too
-        setAllCharacters(combined);
-        setCharacters(shuffle(combined).slice(0, 12)); // easy mode default
+        setAllCharacters([...data, ...extraCards]);
       } catch (err) {
-        console.error("Error fetching characters:", err);
+        console.error(err);
         setError("Failed to load characters. Please try again.");
       } finally {
         setLoading(false);
@@ -62,34 +64,7 @@ function App() {
     loadCharacters();
   }, []);
 
-  const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
-
-  const handleCardClick = (id) => {
-    if (clicked.includes(id)) {
-      setScore(0);
-      setClicked([]);
-    } else {
-      const newScore = score + 1;
-      setScore(newScore);
-      setBestScore(Math.max(bestScore, newScore));
-      setClicked([...clicked, id]);
-    }
-    setCharacters(shuffle(characters));
-  };
-
-  // Change mode dynamically
-  const handleModeChange = (selectedMode) => {
-    setMode(selectedMode);
-    setScore(0);
-    setClicked([]);
-    if (selectedMode === "easy") {
-      setCharacters(shuffle(allCharacters).slice(0, 12));
-    } else {
-      setCharacters(shuffle(allCharacters).slice(0, 16));
-    }
-  };
-
-  // Loading screen
+  // === Loading Screen ===
   if (loading) {
     return (
       <div
@@ -134,46 +109,29 @@ function App() {
     );
   }
 
-  // Main game
+  // === Main App ===
   return (
     <div className="app-container">
       <header>
         <h1>Anime Memory Game</h1>
-        <p>Score: {score} | Best Score: {bestScore}</p>
         <div className="mode-buttons">
           <button
             className={mode === "easy" ? "active" : ""}
-            onClick={() => handleModeChange("easy")}
+            onClick={() => setMode("easy")}
           >
             Easy (3x4)
           </button>
           <button
             className={mode === "hard" ? "active" : ""}
-            onClick={() => handleModeChange("hard")}
+            onClick={() => setMode("hard")}
           >
             Hard (4x4)
           </button>
         </div>
       </header>
 
-      <div className={`game-board ${mode}`}>
-        {characters.map((char) => (
-          <div
-            key={char.id}
-            className="card"
-            onClick={() => handleCardClick(char.id)}
-            tabIndex={0}
-            role="button"
-            aria-label={`Card: ${char.name}`}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") handleCardClick(char.id);
-            }}
-          >
-            <img src={char.image} alt={char.name} />
-            <p>{char.name}</p>
-          </div>
-        ))}
-      </div>
+      {/* GameBoard now manages score internally */}
+      <GameBoard cards={allCharacters} mode={mode} />
 
       <footer>
         <p>Made with React + Jikan API</p>
