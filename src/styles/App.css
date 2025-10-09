@@ -69,8 +69,8 @@ html, body {
 .app-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertical centering */
-  align-items: center;     /* horizontal centering */
+  justify-content: flex-start;
+  align-items: center;
   text-align: center;
   min-height: 100vh;
   width: 100%;
@@ -89,12 +89,51 @@ header h1 {
   margin: 0;
 }
 
+/* === Mode Selection Buttons === */
+.mode-selection {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.mode-selection button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #eee;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.mode-selection button:hover,
+.mode-selection button:focus {
+  background-color: #ddd;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mode-selection button:focus-visible {
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}
+
+.mode-selection button.active {
+  background-color: #ffd700;
+  color: #000;
+}
+
 /* === Game Board === */
 .game-board {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1rem;
-  justify-items: center;
+  justify-content: center; /* center grid horizontally */
+  justify-items: center;   /* center cards inside grid */
   align-items: center;
   width: 100%;
   max-width: 900px;
@@ -162,6 +201,7 @@ footer {
   .loading-overlay p.sound-hint { font-size: 1rem; }
   .card { width: 100px; height: 140px; }
   .card img { height: 100px; }
+  .mode-selection button { font-size: 0.95rem; padding: 0.5rem 1rem; }
 }
 
 @media (max-width: 480px) {
@@ -169,4 +209,5 @@ footer {
   .loading-overlay p.sound-hint { font-size: 0.95rem; }
   .card { width: 90px; height: 130px; }
   .card img { height: 90px; }
+  .mode-selection button { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
 }
