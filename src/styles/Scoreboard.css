@@ -1,13 +1,45 @@
 /* src/styles/Scoreboard.css */
+
+/* === Scoreboard Container === */
 .scoreboard {
   text-align: center;
-  margin-top: 1rem;
+  margin: 1.5rem 0;
+  font-family: "Poppins", sans-serif;
+  color: #222; /* high contrast text */
 }
 
+/* === Scores Flex Container === */
 .scores {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+  gap: 1.5rem; /* flexible gap */
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
+  background: #f4f6fc; /* subtle background for contrast */
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* === Individual Score Items === */
+.scores p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* === Responsive Typography === */
+@media (max-width: 768px) {
+  .scores {
+    gap: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scores {
+    flex-direction: column; /* stack scores vertically on small screens */
+    gap: 0.75rem;
+    font-size: 1rem;
+  }
 }

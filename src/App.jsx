@@ -104,7 +104,7 @@ function App() {
           <p>Fetching your favorite characters...</p>
           {!soundEnabled && (
             <p className="sound-hint">
-              Click anywhere (or press Enter/Space) to enable sound 🎵
+              Click anywhere to enable sound 🎵
             </p>
           )}
         </div>
