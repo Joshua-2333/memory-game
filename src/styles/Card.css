@@ -1,92 +1,138 @@
+/* === Cards Container === */
+.cards-container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Easy Mode (4 columns x 3 rows = 12 cards) */
+.cards-container.easy {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Hard Mode (4 columns x 4 rows = 16 cards) */
+.cards-container.hard {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 /* === Card Container === */
 .card {
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   text-transform: capitalize;
-  width: 200px;            /* bigger card */
-  padding: 0.5rem;
+  width: 70%;
+  aspect-ratio: 3 / 4; /* consistent height */
+  padding: 0.35rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   outline: none;
+  user-select: none;
+  will-change: transform, box-shadow;
+  box-sizing: border-box;
 }
 
-/* === Hover & Focus Effects === */
+/* === Hover & Focus === */
 .card:hover,
 .card:focus {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.18);
+}
+
+/* === Active Click === */
+.card:active {
+  transform: scale(0.95);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
 }
 
 /* === Image Styling === */
 .card img {
   width: 100%;
-  height: auto;            /* natural height */
-  max-height: 300px;       /* enough for tall images */
-  object-fit: contain;      /* show entire image */
+  height: 75%; /* slightly smaller to fit grid without scroll */
+  object-fit: cover;
   border-radius: 8px;
-  display: block;
-  background-color: #f0f0f0; /* optional: gray background for images with transparent edges */
+  background-color: #f0f0f0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
 }
 
 /* === Character Name === */
 .char-name {
   font-weight: 600;
   color: #222;
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
+  line-height: 1.1rem;
+  transition: color 0.2s ease;
 }
 
-/* === Focus Visible Outline === */
+.card:hover .char-name {
+  color: #ff6b6b;
+}
+
+/* === Focus Accessibility === */
 .card:focus-visible {
   outline: 3px solid #ffd700;
   outline-offset: 3px;
 }
 
-/* === Responsive Layout === */
-@media (max-width: 1024px) {
-  .card {
-    width: 180px;
-  }
+/* === Responsive Adjustments === */
 
-  .card img {
-    max-height: 250px;
+/* Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .cards-container.easy,
+  .cards-container.hard {
+    gap: 0.5rem;
   }
 
   .char-name {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 }
 
+/* Small Tablets / Large Phones (≤768px) */
 @media (max-width: 768px) {
   .card {
-    width: 160px;
+    aspect-ratio: 3 / 4.2;
+    padding: 0.3rem;
   }
 
-  .card img {
-    max-height: 220px;
+  .cards-container.easy,
+  .cards-container.hard {
+    gap: 0.4rem;
   }
 
   .char-name {
-    font-size: 0.95rem;
+    font-size: 0.7rem;
   }
 }
 
+/* Mobile (≤480px) */
 @media (max-width: 480px) {
-  .card {
-    width: 140px;
-    padding: 0.4rem;
-  }
-
   .card img {
-    max-height: 180px;
+    height: 70%;
   }
 
   .char-name {
-    font-size: 0.9rem;
+    font-size: 0.65rem;
+  }
+
+  .cards-container.easy,
+  .cards-container.hard {
+    gap: 0.35rem;
   }
 }

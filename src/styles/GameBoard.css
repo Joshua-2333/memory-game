@@ -1,161 +1,92 @@
 /* === Game Board Container === */
-.game-board {
-  display: grid;
-  gap: 1rem;
-  justify-items: center;
-  padding: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  transition: all 0.3s ease;
-}
-
-/* === Easy Mode Grid (4 × 3) === */
-.game-board.easy {
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, auto);
-}
-
-/* === Hard Mode Grid (4 × 4) === */
-.game-board.hard {
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, auto);
-}
-
-/* === Card Styles === */
-.card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-transform: capitalize;
-  width: 100%;
-  max-width: 150px;
-  padding: 0.5rem;
+.game-board-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  color: #111;
+  justify-content: flex-start; /* keep content at top */
+  width: 100%;                 /* full width */
+  max-width: 1200px;           /* container wider so shrinking game board won't affect cards */
+  padding: 1rem;
+  box-sizing: border-box;
+  margin: 0 auto;
+  overflow: hidden;            /* prevent scrollbars */
 }
 
-/* Hover + Focus states for accessibility */
-.card:hover,
-.card:focus {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  outline: none;
-}
-
-/* Focus-visible (AA accessible) */
-.card:focus-visible {
-  outline: 3px solid #ffd700;
-  outline-offset: 3px;
-}
-
-/* === Card Image === */
-.card img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* === Card Text === */
-.char-name {
+/* === Scoreboard === */
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
   font-weight: 600;
-  margin-top: 0.25rem;
-  text-align: center;
   color: #111;
+  margin-bottom: 1rem;
 }
 
-.anime-name {
-  font-size: 0.8rem;
-  color: #333;
-  margin-top: 0.15rem;
-  text-align: center;
+/* === Game Board Grid === */
+.game-board {
+  display: grid;
+  justify-items: center;
+  align-items: start;       /* align cards to top */
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  grid-auto-rows: min-content; /* shrink rows to card height */
+  height: auto;               /* remove extra height */
+  overflow: hidden;           /* prevent scrolling */
 }
 
-/* === Accessibility: High Contrast for Text === */
-.card,
-.char-name,
-.anime-name {
-  color: #111; /* ensure >4.5:1 contrast on white bg */
+/* === Grid Layouts === */
+.game-board.easy {
+  grid-template-columns: repeat(4, 1fr);
 }
 
-/* === Responsive Grid and Card Adjustments === */
+.game-board.hard {
+  grid-template-columns: repeat(4, 1fr);
+}
 
-/* --- Large Tablets (≤1024px) --- */
+/* === Cards inside Grid === */
+.game-board .card {
+  width: 100%;
+  max-width: 150px;   /* uniform card width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* === Responsive Adjustments === */
+
+/* Large tablets ≤1024px */
 @media (max-width: 1024px) {
-  .card {
-    max-width: 130px;
-  }
-
-  .game-board {
-    gap: 0.8rem;
-    padding: 1.5rem;
-  }
-}
-
-/* --- Tablets (≤768px) --- */
-@media (max-width: 768px) {
-  .game-board.easy {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, auto);
-  }
-
-  .game-board.hard {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, auto);
-  }
-
-  .card {
-    max-width: 110px;
-  }
-
-  .game-board {
-    gap: 0.7rem;
-    padding: 1rem;
-  }
-}
-
-/* --- Mobile (≤480px) --- */
-@media (max-width: 480px) {
-  .game-board.easy,
-  .game-board.hard {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-  }
-
-  .card {
-    max-width: 90px;
-  }
-
-  .card img {
-    height: auto;
-  }
-
   .game-board {
     gap: 0.5rem;
-    padding: 0.8rem;
+  }
+  .game-board .card {
+    max-width: 130px;
   }
 }
 
-/* === Keyboard navigation enhancement === */
-.card:focus {
-  outline: 2px dashed #ffd700;
-  outline-offset: 3px;
+/* Tablets ≤768px */
+@media (max-width: 768px) {
+  .game-board {
+    gap: 0.4rem;
+    padding: 0.8rem;
+  }
+  .game-board .card {
+    max-width: 110px;
+  }
 }
 
-/* === Flexible resizing using clamp === */
-.card {
-  width: clamp(80px, 15vw, 150px);
-  height: auto;
-}
-
-/* === Optional: Smooth animations for reshuffle === */
-.game-board {
-  transition: all 0.3s ease;
+/* Mobile ≤480px */
+@media (max-width: 480px) {
+  .game-board {
+    gap: 0.35rem;
+    padding: 0.6rem;
+  }
+  .game-board .card {
+    max-width: 90px;
+  }
 }

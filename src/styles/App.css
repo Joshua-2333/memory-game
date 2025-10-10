@@ -1,4 +1,4 @@
-/* === Ensure full height for proper centering === */
+/* === Global Reset & Layout === */
 html, body {
   height: 100%;
   margin: 0;
@@ -7,7 +7,7 @@ html, body {
   background: #f4f6fc;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* ensures header/buttons are always visible */
 }
 
 /* === Loading Screen === */
@@ -37,7 +37,7 @@ html, body {
   text-align: center;
   z-index: 10;
   padding: 2rem;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
   max-width: 90%;
 }
@@ -63,12 +63,11 @@ html, body {
 }
 
 @keyframes pulse {
-  0% { opacity: 0.7; }
+  0%, 100% { opacity: 0.7; }
   50% { opacity: 1; }
-  100% { opacity: 0.7; }
 }
 
-/* === Base App Styling === */
+/* === App Container === */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -84,7 +83,8 @@ html, body {
 
 /* === Header === */
 header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  z-index: 2; /* ensures it stays above the game board */
 }
 
 header h1 {
@@ -99,28 +99,28 @@ header h1 {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   flex-wrap: wrap;
+  z-index: 2;
 }
 
 .mode-buttons button {
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   background-color: #eee;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: all 0.2s ease;
-  outline: none;
   color: #111;
 }
 
 .mode-buttons button:hover,
 .mode-buttons button:focus {
   background-color: #ddd;
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .mode-buttons button:focus-visible {
@@ -131,90 +131,6 @@ header h1 {
 .mode-buttons button.active {
   background-color: #ffd700;
   color: #000;
-}
-
-/* === Game Board Container === */
-.game-board-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-/* === Game Board === */
-.game-board {
-  display: grid;
-  gap: 1rem;
-  justify-content: center;
-  justify-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 1.5rem auto 0;
-  padding: 0 1rem;
-}
-
-/* Grid adjustments based on mode */
-.game-board.easy {
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 240px; /* taller to fit names */
-}
-
-.game-board.hard {
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 240px;
-}
-
-/* === Cards === */
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: clamp(120px, 14vw, 170px);
-  height: clamp(200px, 22vw, 240px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-  padding: 0.25rem;
-}
-
-/* Card Image */
-.card img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* Card Text Container */
-.card-text {
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-/* Character Name */
-.char-name {
-  font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.2;
-  color: #111; /* high contrast */
-  word-break: break-word;
-}
-
-/* Hover & Focus states */
-.card:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-}
-
-.card:focus {
-  outline: 3px solid #ffd700;
-  outline-offset: 2px;
 }
 
 /* === Scoreboard === */
@@ -229,34 +145,30 @@ header h1 {
 
 /* === Footer === */
 footer {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   font-size: 0.9rem;
   color: #444;
   text-align: center;
 }
 
-/* === Error Messages === */
+/* === Error === */
 .error {
   color: #c0392b;
   font-weight: 600;
 }
 
-/* === Responsive Adjustments === */
+/* === Responsive === */
 @media (max-width: 1024px) {
-  .card { width: 140px; height: 220px; }
-  .card img { height: 160px; }
-  .game-board { gap: 0.8rem; }
+  header h1 { font-size: 2rem; }
+  .mode-buttons button { font-size: 0.9rem; padding: 0.45rem 0.9rem; }
 }
 
 @media (max-width: 768px) {
-  .card { width: 120px; height: 200px; }
-  .card img { height: 150px; }
-  .mode-buttons button { font-size: 0.95rem; padding: 0.5rem 1rem; }
+  header h1 { font-size: 1.8rem; }
+  .mode-buttons button { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
 }
 
 @media (max-width: 480px) {
-  .card { width: 90px; height: 160px; }
-  .card img { height: 110px; }
-  .char-name { font-size: 0.8rem; }
-  .mode-buttons button { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
+  header h1 { font-size: 1.6rem; }
+  .mode-buttons button { font-size: 0.8rem; padding: 0.35rem 0.7rem; }
 }
