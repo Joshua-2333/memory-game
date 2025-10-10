@@ -29,7 +29,11 @@
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   text-transform: capitalize;
-  width: 70%;
+
+  /* FIX: remove fixed width so card fills grid cell */
+  width: 100%;
+  max-width: none;
+
   aspect-ratio: 3 / 4; /* consistent height */
   padding: 0.35rem;
   display: flex;

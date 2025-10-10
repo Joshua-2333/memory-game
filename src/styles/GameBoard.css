@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: flex-start; /* keep content at top */
   width: 100%;                 /* full width */
-  max-width: 1200px;           /* container wider so shrinking game board won't affect cards */
+  max-width: 1200px;
   padding: 1rem;
   box-sizing: border-box;
   margin: 0 auto;
@@ -25,36 +25,34 @@
 /* === Game Board Grid === */
 .game-board {
   display: grid;
-  justify-items: center;
-  align-items: start;       /* align cards to top */
+  justify-items: stretch;      /* fill each column */
+  align-items: stretch;        /* fill each row */
   gap: 0.6rem;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
   box-sizing: border-box;
-  grid-auto-rows: min-content; /* shrink rows to card height */
-  height: auto;               /* remove extra height */
-  overflow: hidden;           /* prevent scrolling */
+
+  /* FIX: uniform row heights */
+  grid-auto-rows: 1fr;
 }
 
 /* === Grid Layouts === */
-.game-board.easy {
-  grid-template-columns: repeat(4, 1fr);
-}
-
+.game-board.easy,
 .game-board.hard {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4 columns both modes */
 }
 
 /* === Cards inside Grid === */
 .game-board .card {
-  width: 100%;
-  max-width: 150px;   /* uniform card width */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  width: 100%;          /* fill the grid cell */
+  max-width: none;      /* remove fixed max width */
+  aspect-ratio: 3 / 4;  /* consistent card height */
 }
 
 /* === Responsive Adjustments === */
@@ -64,9 +62,6 @@
   .game-board {
     gap: 0.5rem;
   }
-  .game-board .card {
-    max-width: 130px;
-  }
 }
 
 /* Tablets ≤768px */
@@ -75,9 +70,6 @@
     gap: 0.4rem;
     padding: 0.8rem;
   }
-  .game-board .card {
-    max-width: 110px;
-  }
 }
 
 /* Mobile ≤480px */
@@ -85,8 +77,5 @@
   .game-board {
     gap: 0.35rem;
     padding: 0.6rem;
-  }
-  .game-board .card {
-    max-width: 90px;
   }
 }

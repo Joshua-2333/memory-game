@@ -7,7 +7,8 @@ html, body {
   background: #f4f6fc;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* ensures header/buttons are always visible */
+  align-items: flex-start; /* header/buttons visible */
+  box-sizing: border-box;
 }
 
 /* === Loading Screen === */
@@ -72,11 +73,11 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch; /* stretch children full width */
   text-align: center;
   min-height: 100vh;
   width: 100%;
-  max-width: 1400px;
+  max-width: none; /* allow full width */
   padding: 2rem 1rem;
   box-sizing: border-box;
 }
@@ -136,11 +137,68 @@ header h1 {
 /* === Scoreboard === */
 .scoreboard {
   display: flex;
+  flex-wrap: wrap; /* handles timer + score horizontally */
   justify-content: center;
   gap: 2rem;
   margin-top: 1rem;
   font-weight: 600;
   color: #111;
+}
+
+/* === Timer === */
+.timer {
+  font-weight: 700;
+  color: #d9534f;
+  font-size: 1.1rem;
+  align-self: center;
+}
+
+/* === Game Board Container === */
+.game-board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  overflow: hidden; /* prevent scrollbars unless necessary */
+  box-sizing: border-box;
+  padding: 1rem 0;
+}
+
+/* === Game Board Grid === */
+.game-board {
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 1200px; /* stretch horizontally */
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  grid-auto-rows: min-content;
+}
+
+/* Easy: 4 columns x 3 rows */
+.game-board.easy {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Hard: 4 columns x 4 rows */
+.game-board.hard {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Cards inside Grid */
+.game-board .card {
+  width: 100%;
+  max-width: 150px;
+  max-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
 /* === Footer === */
