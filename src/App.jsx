@@ -4,6 +4,7 @@ import "./styles/App.css";
 import { fetchAnimeCharacters } from "./api";
 import loadingVideo from "./assets/pekorap.mp4";
 import GameBoard from "./components/GameBoard";
+import Timer from "./components/Timer"; // ✅ Import Timer
 
 // ✅ Import local images
 import shadowImg from "./assets/shadow.jpg";
@@ -24,6 +25,7 @@ function App() {
   const [error, setError] = useState(null);
   const [mode, setMode] = useState("easy");
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [gameOver, setGameOver] = useState(false); // track timer end
   const videoRef = useRef(null);
 
   // === Limit video loop to 20 seconds ===
@@ -63,6 +65,12 @@ function App() {
     }
     loadCharacters();
   }, []);
+
+  // === Handle timer running out ===
+  const handleTimeUp = () => {
+    setGameOver(true);
+    alert("Time's up! You lose 😢");
+  };
 
   // === Loading Screen ===
   if (loading) {
@@ -114,24 +122,35 @@ function App() {
     <div className="app-container">
       <header>
         <h1>Anime Memory Game</h1>
+
+        {/* Mode buttons */}
         <div className="mode-buttons">
           <button
             className={mode === "easy" ? "active" : ""}
-            onClick={() => setMode("easy")}
+            onClick={() => {
+              setMode("easy");
+              setGameOver(false);
+            }}
           >
             Easy (3x4)
           </button>
           <button
             className={mode === "hard" ? "active" : ""}
-            onClick={() => setMode("hard")}
+            onClick={() => {
+              setMode("hard");
+              setGameOver(false);
+            }}
           >
             Hard (4x4)
           </button>
         </div>
+
+        {/* Timer placed below mode buttons */}
+        <Timer mode={mode} onTimeUp={handleTimeUp} />
       </header>
 
-      {/* GameBoard now manages score internally */}
-      <GameBoard cards={allCharacters} mode={mode} />
+      {/* GameBoard */}
+      <GameBoard cards={allCharacters} mode={mode} gameOver={gameOver} />
 
       <footer>
         <p>Made with React + Jikan API</p>
