@@ -1,10 +1,9 @@
-// src/App.jsx
 import { useEffect, useState, useRef } from "react";
 import "./styles/App.css";
 import { fetchAnimeCharacters } from "./api";
 import loadingVideo from "./assets/pekorap.mp4";
 import GameBoard from "./components/GameBoard";
-import Timer from "./components/Timer"; // ✅ Import Timer
+import Timer from "./components/Timer";
 
 // ✅ Import local images
 import shadowImg from "./assets/shadow.jpg";
@@ -19,13 +18,15 @@ const extraCards = [
   { id: "luffy", name: "Luffy", image: luffyImg },
 ];
 
-function App() {
+export default function App() {
   const [allCharacters, setAllCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mode, setMode] = useState("easy");
   const [soundEnabled, setSoundEnabled] = useState(false);
-  const [gameOver, setGameOver] = useState(false); // track timer end
+  const [message, setMessage] = useState("");
+  const [gameStatus, setGameStatus] = useState("idle"); // idle | playing | won | lost
+  const [resetKey, setResetKey] = useState(0); // 🔑 forces GameBoard + Timer remount
   const videoRef = useRef(null);
 
   // === Limit video loop to 20 seconds ===
@@ -56,6 +57,7 @@ function App() {
       try {
         const data = await fetchAnimeCharacters();
         setAllCharacters([...data, ...extraCards]);
+        setGameStatus("playing"); // ✅ start game automatically
       } catch (err) {
         console.error(err);
         setError("Failed to load characters. Please try again.");
@@ -68,8 +70,29 @@ function App() {
 
   // === Handle timer running out ===
   const handleTimeUp = () => {
-    setGameOver(true);
-    alert("Time's up! You lose 😢");
+    if (gameStatus === "playing") {
+      setGameStatus("lost");
+      setMessage("Time's up! You lose 😢");
+    }
+  };
+
+  // === Handle Win ===
+  const handleWin = () => {
+    setGameStatus("won");
+    setMessage("Congratulations! You won 🎉");
+  };
+
+  // === Handle Fail (duplicate click) ===
+  const handleFail = () => {
+    setGameStatus("lost");
+    setMessage("Oops! You clicked a duplicate card 😢");
+  };
+
+  // === Restart Game ===
+  const restartGame = () => {
+    setMessage("");
+    setGameStatus("playing");
+    setResetKey((prev) => prev + 1); // 🔁 remount GameBoard + Timer
   };
 
   // === Loading Screen ===
@@ -117,7 +140,6 @@ function App() {
     );
   }
 
-  // === Main App ===
   return (
     <div className="app-container">
       <header>
@@ -129,7 +151,7 @@ function App() {
             className={mode === "easy" ? "active" : ""}
             onClick={() => {
               setMode("easy");
-              setGameOver(false);
+              restartGame();
             }}
           >
             Easy (3x4)
@@ -138,19 +160,39 @@ function App() {
             className={mode === "hard" ? "active" : ""}
             onClick={() => {
               setMode("hard");
-              setGameOver(false);
+              restartGame();
             }}
           >
             Hard (4x4)
           </button>
         </div>
 
-        {/* Timer placed below mode buttons */}
-        <Timer mode={mode} onTimeUp={handleTimeUp} />
+        {/* Timer */}
+        <Timer
+          key={`timer-${resetKey}`} // ✅ remount on restart
+          mode={mode}
+          onTimeUp={handleTimeUp}
+          gameStatus={gameStatus}
+        />
       </header>
 
+      {/* Win/Fail Message */}
+      {(gameStatus === "won" || gameStatus === "lost") && (
+        <div className="message-box">
+          <p>{message}</p>
+          <button onClick={restartGame}>Play Again</button>
+        </div>
+      )}
+
       {/* GameBoard */}
-      <GameBoard cards={allCharacters} mode={mode} gameOver={gameOver} />
+      <GameBoard
+        key={`board-${resetKey}`} // ✅ remount on restart
+        cards={allCharacters}
+        mode={mode}
+        gameStatus={gameStatus}
+        onWin={handleWin}
+        onFail={handleFail}
+      />
 
       <footer>
         <p>Made with React + Jikan API</p>
@@ -158,5 +200,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

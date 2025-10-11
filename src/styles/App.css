@@ -73,11 +73,11 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: stretch; /* stretch children full width */
+  align-items: stretch;
   text-align: center;
   min-height: 100vh;
   width: 100%;
-  max-width: none; /* allow full width */
+  max-width: none;
   padding: 2rem 1rem;
   box-sizing: border-box;
 }
@@ -85,7 +85,7 @@ html, body {
 /* === Header === */
 header {
   margin-bottom: 1rem;
-  z-index: 2; /* ensures it stays above the game board */
+  z-index: 2;
 }
 
 header h1 {
@@ -137,7 +137,7 @@ header h1 {
 /* === Scoreboard === */
 .scoreboard {
   display: flex;
-  flex-wrap: wrap; /* handles timer + score horizontally */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
   margin-top: 1rem;
@@ -160,7 +160,7 @@ header h1 {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  overflow: hidden; /* prevent scrollbars unless necessary */
+  overflow: hidden;
   box-sizing: border-box;
   padding: 1rem 0;
 }
@@ -172,7 +172,7 @@ header h1 {
   align-items: start;
   gap: 0.6rem;
   width: 100%;
-  max-width: 1200px; /* stretch horizontally */
+  max-width: 1200px;
   margin: 0 auto;
   transition: all 0.3s ease;
   box-sizing: border-box;
@@ -199,6 +199,39 @@ header h1 {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+}
+
+/* === Game Message Box === */
+.game-message {
+  position: relative;
+  margin: 1rem auto;
+  padding: 1.5rem 2rem;
+  max-width: 400px;
+  background-color: #fff;
+  border: 2px solid #111;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111;
+  text-align: center;
+  z-index: 5;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+}
+
+.game-message button.play-again-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffd700;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.game-message button.play-again-btn:hover {
+  background-color: #e6c200;
+  transform: scale(1.05);
 }
 
 /* === Footer === */
