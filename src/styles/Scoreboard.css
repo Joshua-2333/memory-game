@@ -3,9 +3,10 @@
 /* === Scoreboard Container === */
 .scoreboard {
   text-align: center;
-  margin: 1.5rem 0;
+  margin: 1.5rem 0; /* default spacing */
   font-family: "Poppins", sans-serif;
   color: #222; /* high contrast text */
+  z-index: 2; /* ensure above background elements */
 }
 
 /* === Scores Flex Container === */
@@ -28,7 +29,7 @@
   line-height: 1.4;
 }
 
-/* === Responsive Typography === */
+/* === Responsive Typography & Positioning === */
 @media (max-width: 768px) {
   .scores {
     gap: 1rem;
@@ -37,9 +38,15 @@
 }
 
 @media (max-width: 480px) {
+  .scoreboard {
+    margin-top: 0.5rem;   /* move closer to header */
+    margin-bottom: 0.5rem; /* tighter spacing with game board */
+  }
+
   .scores {
-    flex-direction: column; /* stack scores vertically on small screens */
-    gap: 0.75rem;
+    flex-direction: column; /* stack scores vertically */
+    gap: 0.6rem;
     font-size: 1rem;
+    padding: 0.5rem 0.75rem; /* reduce padding for small screens */
   }
 }

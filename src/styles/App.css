@@ -4,7 +4,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
-  background: #f4f6fc;
+  background: linear-gradient(135deg, #dbe2ef, #f0f4f8);
   display: flex;
   justify-content: center;
   align-items: flex-start; /* header/buttons visible */
@@ -25,12 +25,35 @@ html, body {
   cursor: pointer;
 }
 
+/* === Loading Video === */
 .loading-video {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* fills container */
+  transform: translate(-50%, -50%);
   filter: brightness(0.35);
+  z-index: 1;
+}
+
+/* === Mobile & Tablet Video Adjustments === */
+@media (max-width: 1024px) {
+  .loading-video {
+    object-fit: contain; /* fit inside screen */
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-video {
+    object-fit: contain;
+    width: 100%;
+    height: auto; /* keep aspect ratio */
+    max-height: 100vh;
+  }
 }
 
 .loading-overlay {
@@ -80,6 +103,7 @@ html, body {
   max-width: none;
   padding: 2rem 1rem;
   box-sizing: border-box;
+  background: linear-gradient(135deg, #e0f7fa, #f0f4f8);
 }
 
 /* === Header === */
@@ -257,9 +281,31 @@ footer {
 @media (max-width: 768px) {
   header h1 { font-size: 1.8rem; }
   .mode-buttons button { font-size: 0.85rem; padding: 0.4rem 0.8rem; }
+
+  /* Move scoreboard up */
+  .scoreboard {
+    margin-top: 0.5rem;
+  }
+
+  /* Shrink cards slightly to avoid scroll */
+  .game-board .card {
+    max-width: 120px;
+    max-height: 160px;
+  }
 }
 
 @media (max-width: 480px) {
   header h1 { font-size: 1.6rem; }
   .mode-buttons button { font-size: 0.8rem; padding: 0.35rem 0.7rem; }
+
+  /* Move scoreboard higher */
+  .scoreboard {
+    margin-top: 0.25rem;
+  }
+
+  /* Shrink cards more to fit screen without scroll */
+  .game-board .card {
+    max-width: 100px;
+    max-height: 140px;
+  }
 }
