@@ -1,4 +1,4 @@
-/* === Game Board Container === */
+/*Game Board Container*/
 .game-board-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@
   overflow: hidden;            /* prevent scrollbars */
 }
 
-/* === Scoreboard === */
+/*Scoreboard*/
 .scoreboard {
   display: flex;
   justify-content: center;
@@ -22,7 +22,7 @@
   margin-bottom: 1rem;
 }
 
-/* === Game Board Grid === */
+/*Game Board Grid*/
 .game-board {
   display: grid;
   justify-items: stretch;      /* fill each column */
@@ -37,13 +37,13 @@
   grid-auto-rows: 1fr;
 }
 
-/* === Grid Layouts === */
+/*Grid Layouts*/
 .game-board.easy,
 .game-board.hard {
   grid-template-columns: repeat(4, 1fr); /* 4 columns both modes */
 }
 
-/* === Cards inside Grid === */
+/*Cards inside Grid*/
 .game-board .card {
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@
   aspect-ratio: 3 / 4;  /* consistent card height */
 }
 
-/* === Responsive Adjustments === */
+/*Responsive Adjustments*/
 
 /* Large tablets ≤1024px */
 @media (max-width: 1024px) {

@@ -1,6 +1,6 @@
 /* src/styles/Scoreboard.css */
 
-/* === Scoreboard Container === */
+/*Scoreboard Container*/
 .scoreboard {
   text-align: center;
   margin: 1.5rem 0; /* default spacing */
@@ -9,7 +9,7 @@
   z-index: 2; /* ensure above background elements */
 }
 
-/* === Scores Flex Container === */
+/*Scores Flex Container*/
 .scores {
   display: flex;
   justify-content: center;
@@ -23,13 +23,13 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* === Individual Score Items === */
+/*Individual Score Items*/
 .scores p {
   margin: 0;
   line-height: 1.4;
 }
 
-/* === Responsive Typography & Positioning === */
+/*Responsive Typography & Positioning*/
 @media (max-width: 768px) {
   .scores {
     gap: 1rem;

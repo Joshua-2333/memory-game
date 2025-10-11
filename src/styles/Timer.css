@@ -1,4 +1,4 @@
-/* === Timer Container === */
+/*Timer Container*/
 .timer-container {
   display: flex;
   justify-content: center;
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-/* === Timer Display === */
+/*Timer Display*/
 .timer {
   font-weight: 700;
   color: #d9534f; /* red for urgency */
@@ -17,7 +17,7 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-/* === Time-Up Message === */
+/*Time-Up Message*/
 .time-up {
   font-weight: 700;
   color: #fff;
