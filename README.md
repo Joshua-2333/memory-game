@@ -1,16 +1,44 @@
-# React + Vite
+# Anime Memory Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##Demo 
+https://anime-memorygame.netlify.app/
 
-Currently, two official plugins are available:
+A fun and interactive memory card game inspired by anime characters. Test your memory skills by selecting unique cards without repeating any selections. Built with dynamic state management and responsive UI for an engaging user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Randomized anime character cards
+- Cards reshuffle after every selection
+- Score resets on duplicate selection
+- Tracks current score and best score
+- Fast and responsive gameplay
+- Fully responsive design (mobile-friendly)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Built With
+
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Component-based architecture
+
+---
+
+## How to Play
+
+1. Click on any card to start the game  
+2. Each card must only be selected once  
+3. After each click, cards shuffle randomly  
+4. Selecting the same card twice resets your score  
+5. Try to beat your highest score!
+
+---
+
+## Installation & Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Joshua-2333/anime-memory-game.git
