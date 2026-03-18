@@ -1,6 +1,6 @@
 # Anime Memory Game
 
-##Demo 
+## Demo 
 https://anime-memorygame.netlify.app/
 
 A fun and interactive memory card game inspired by anime characters. Test your memory skills by selecting unique cards without repeating any selections. Built with dynamic state management and responsive UI for an engaging user experience.
